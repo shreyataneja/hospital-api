@@ -16,7 +16,10 @@
     $data = json_decode(file_get_contents("php://input"));
     
     $item->AppointmentID = $data->AppointmentID;
-    $item->Patient = $data->Patient;
+    $item->Patient_first_name = $data->Patient_first_name;
+    $item->Patient_last_name = $data->Patient_last_name;
+    $item->Patient_email = $data->Patient_email;
+    $item->Patient_phone = $data->Patient_phone;
     $item->PrepNurse = $data->PrepNurse;
     $item->Physician = $data->Physician;
     $item->Start = date('Y-m-d H:i:s');

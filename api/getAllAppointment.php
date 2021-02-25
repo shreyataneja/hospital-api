@@ -13,9 +13,6 @@
     $stmt = $items->getAppointments();
     $itemCount = $stmt->rowCount();
 
-
-    echo json_encode($itemCount);
-
     if($itemCount > 0){
         
         $app_arr = array();
@@ -26,7 +23,10 @@
             extract($row);
             $e = array(
                 "AppointmentID" => $AppointmentID,
-                "Patient" => $Patient,
+                "Patient_first_name" => $Patient_first_name,
+                "Patient_last_name" => $Patient_last_name,
+                "Patient_email" => $Patient_email,
+                "Patient_phone" => $Patient_phone,
                 "PrepNurse" => $PrepNurse,
                 "Physician" => $Physician,
                 "Start" => $Start,

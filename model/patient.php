@@ -40,7 +40,7 @@
         public function createPatient(){
             $sqlQuery = "INSERT INTO
                         ". $this->db_table ."(`first_name`, `last_name`, `sex`, `contact_number`, `email`, `age`, `weight`, `height`, `InsuranceID`, `street_address`, `city`, `province`, `postal`) VALUES 
-                   (?,?,?,?,?,?,?,?,?,?,?,?)";
+                   (?,?,?,?,?,?,?,?,?,?,?,?,?)";
         
             $stmt = $this->conn->prepare($sqlQuery);
         
