@@ -19,12 +19,12 @@
 
     if($item->first_name != null){
         // create array
-        $emp_arr = array(
+        $pat_arr = array(
             "id" =>  $item->id
         );
       
         http_response_code(200);
-        echo json_encode($emp_arr);
+        // echo json_encode($pat_arr);
     }
       
     else{

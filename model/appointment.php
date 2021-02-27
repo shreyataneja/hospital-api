@@ -10,6 +10,7 @@
         // Columns
         
         public $AppointmentID;
+        public $Patient_id;
         public $Patient_first_name;
         public $Patient_last_name;
         public $Patient_email;
@@ -29,7 +30,7 @@
         // GET ALL
         public function getAppointments(){
            
-            $sqlQuery = "SELECT `AppointmentID`, `Patient_first_name`,`Patient_last_name`,`Patient_email`,`Patient_phone`, `PrepNurse`, `Physician`, `Start`, `End`, `ExaminationRoom` FROM " . $this->db_table . "";
+            $sqlQuery = "SELECT `AppointmentID`,`Patient_id`, `Patient_first_name`,`Patient_last_name`,`Patient_email`,`Patient_phone`, `PrepNurse`, `Physician`, `Start`, `End`, `ExaminationRoom` FROM " . $this->db_table . "";
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->execute();
             return $stmt;
@@ -38,12 +39,13 @@
         // CREATE
         public function createAppointment(){
             $sqlQuery = "INSERT INTO
-                        ". $this->db_table ."(`Patient_first_name`,`Patient_last_name`,`Patient_email`,`Patient_phone`, `PrepNurse`, `Physician`, `Start`, `End`, `ExaminationRoom`) VALUES 
-                   (?,?,?,?,?,?,?,?,?)";
+                        ". $this->db_table ."(`Patient_id`,`Patient_first_name`,`Patient_last_name`,`Patient_email`,`Patient_phone`, `PrepNurse`, `Physician`, `Start`, `End`, `ExaminationRoom`) VALUES 
+                   (?,?,?,?,?,?,?,?,?,?)";
         
             $stmt = $this->conn->prepare($sqlQuery);
         
             // sanitize
+            $this->Patient_id=htmlspecialchars(strip_tags($this->Patient_id));
             $this->Patient_first_name=htmlspecialchars(strip_tags($this->Patient_first_name));
             $this->Patient_last_name=htmlspecialchars(strip_tags($this->Patient_last_name));
             $this->Patient_email=htmlspecialchars(strip_tags($this->Patient_email));
@@ -55,15 +57,16 @@
             $this->ExaminationRoom=htmlspecialchars(strip_tags($this->ExaminationRoom));
             
             // bind data
-            $stmt->bindParam(1, $this->Patient_first_name);
-            $stmt->bindParam(2, $this->Patient_last_name);
-            $stmt->bindParam(3, $this->Patient_email);
-            $stmt->bindParam(4, $this->Patient_phone);
-            $stmt->bindParam(5, $this->PrepNurse);
-            $stmt->bindParam(6, $this->Physician);
-            $stmt->bindParam(7, $this->Start);
-            $stmt->bindParam(8, $this->End);
-            $stmt->bindParam(9, $this->ExaminationRoom);
+            $stmt->bindParam(1, $this->Patient_id);
+            $stmt->bindParam(2, $this->Patient_first_name);
+            $stmt->bindParam(3, $this->Patient_last_name);
+            $stmt->bindParam(4, $this->Patient_email);
+            $stmt->bindParam(5, $this->Patient_phone);
+            $stmt->bindParam(6, $this->PrepNurse);
+            $stmt->bindParam(7, $this->Physician);
+            $stmt->bindParam(8, $this->Start);
+            $stmt->bindParam(9, $this->End);
+            $stmt->bindParam(10, $this->ExaminationRoom);
     
 
 
@@ -76,7 +79,7 @@
         // READ single
         public function getSingleAppointment(){
             $sqlQuery = "SELECT
-                        `AppointmentID`,`Patient_first_name`,`Patient_last_name`,`Patient_email`,`Patient_phone`, `PrepNurse`, `Physician`, `Start`, `End`, `ExaminationRoom`
+                        `AppointmentID`,`Patient_id`,`Patient_first_name`,`Patient_last_name`,`Patient_email`,`Patient_phone`, `PrepNurse`, `Physician`, `Start`, `End`, `ExaminationRoom`
                       FROM
                         ". $this->db_table ."
                     WHERE 
@@ -90,13 +93,14 @@
             $stmt->execute();
 
             $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
-            var_dump($dataRow);
+            echo(json_encode($dataRow));
             
             $this->AppointmentID=$dataRow['AppointmentID'];
-            $this->Patient=$dataRow['Patient_first_name'];
-            $this->Patient=$dataRow['Patient_last_name'];
-            $this->Patient=$dataRow['Patient_email'];
-            $this->Patient=$dataRow['Patient_phone'];
+            $this->Patient_id=$dataRow['Patient_id'];
+            $this->Patient_first_name=$dataRow['Patient_first_name'];
+            $this->Patient_last_name=$dataRow['Patient_last_name'];
+            $this->Patient_email=$dataRow['Patient_email'];
+            $this->Patient_phone=$dataRow['Patient_phone'];
             $this->PrepNurse=$dataRow['PrepNurse'];
             $this->Physician= $dataRow['Physician'];
             $this->Start= $dataRow['Start'];
@@ -110,6 +114,7 @@
             $sqlQuery = "UPDATE
                         ". $this->db_table ."
                     SET
+                    Patient_id =:Patient_id,
                     Patient_first_name = :Patient_first_name, 
                     Patient_last_name = :Patient_last_name, 
                     Patient_email = :Patient_email, 
@@ -125,6 +130,7 @@
             $stmt = $this->conn->prepare($sqlQuery);
         
             // sanitize
+            $this->Patient_id=htmlspecialchars(strip_tags($this->Patient_id));
             $this->Patient_first_name=htmlspecialchars(strip_tags($this->Patient_first_name));
             $this->Patient_last_name=htmlspecialchars(strip_tags($this->Patient_last_name));
             $this->Patient_email=htmlspecialchars(strip_tags($this->Patient_email));
@@ -137,7 +143,8 @@
            
 
             // bind data
-            $stmt->bindParam(":AppointmentID", $this->AppointmentID);\
+            $stmt->bindParam(":AppointmentID", $this->AppointmentID);
+            $stmt->bindParam(":Patient_id", $this->Patient_id);
             $stmt->bindParam(":Patient_first_name", $this->Patient_first_name);
             $stmt->bindParam(":Patient_last_name", $this->Patient_last_name);
             $stmt->bindParam(":Patient_email", $this->Patient_email);
@@ -146,9 +153,9 @@
             $stmt->bindParam(":Physician", $this->Physician);
             $stmt->bindParam(":Start", $this->Start);
             $stmt->bindParam(":End", $this->End);
-            $stmt->bindParam(":age", $this->ExaminationRoom);
+            $stmt->bindParam(":ExaminationRoom", $this->ExaminationRoom);
           
-        var_dump ($stmt);
+    
             if($stmt->execute()){
                return true;
             }

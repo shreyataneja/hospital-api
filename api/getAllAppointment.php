@@ -16,13 +16,13 @@
     if($itemCount > 0){
         
         $app_arr = array();
-        $app_arr["body"] = array();
-        $app_arr["itemCount"] = $itemCount;
+        
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);
             $e = array(
                 "AppointmentID" => $AppointmentID,
+                "Patient_id" => $Patient_id,
                 "Patient_first_name" => $Patient_first_name,
                 "Patient_last_name" => $Patient_last_name,
                 "Patient_email" => $Patient_email,
@@ -34,7 +34,7 @@
                 "ExaminationRoom" => $ExaminationRoom
             );
 
-            array_push($app_arr["body"], $e);
+            array_push($app_arr, $e);
         }
         echo json_encode($app_arr);
     }

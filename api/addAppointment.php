@@ -16,6 +16,7 @@
     $data = json_decode(file_get_contents("php://input"));
    
     $item->AppointmentID = $data->AppointmentID;
+    $item->Patient_id = $data->Patient_id;
     $item->Patient_first_name = $data->Patient_first_name;
     $item->Patient_last_name = $data->Patient_last_name;
     $item->Patient_email = $data->Patient_email;

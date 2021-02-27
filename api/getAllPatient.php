@@ -18,8 +18,7 @@
     if($itemCount > 0){
         
         $patientArr = array();
-        $patientArr["body"] = array();
-        $patientArr["itemCount"] = $itemCount;
+     
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);
@@ -41,7 +40,7 @@
                
             );
 
-            array_push($patientArr["body"], $e);
+            array_push($patientArr, $e);
         }
         echo json_encode($patientArr);
     }

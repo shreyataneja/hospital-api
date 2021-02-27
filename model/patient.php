@@ -98,7 +98,7 @@
             $stmt->execute();
 
             $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
-            var_dump($dataRow);
+            echo(json_encode($dataRow));
             
             $this->first_name=$dataRow['first_name'];
             $this->last_name=$dataRow['last_name'];
@@ -168,7 +168,7 @@
             $stmt->bindParam(":city", $this->city);
             $stmt->bindParam(":province", $this->province);
             $stmt->bindParam(":postal", $this->postal);
-        var_dump ($stmt);
+     
             if($stmt->execute()){
                return true;
             }
