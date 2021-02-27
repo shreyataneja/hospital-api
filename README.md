@@ -19,8 +19,11 @@ $ git clone https://github.com/shreyataneja/hospital-api
 ### Create a database using MySQL
 
 The SQL Dump file is attached in ```Hospital-Registration/hospital-api/hospital_db.sql ``` 
+
 You can simply import this dump file to your MySQLWorkbench or Sequel Pro.
+
 Or Copy and paste whole file in the terminal once you login to terminal as a root user using ```mysql -uroot -p```
+
 You can also copy and paste the file contents in IDE and execute.
 
 ### Adding dependencies and executing the code 
